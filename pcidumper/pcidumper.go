@@ -33,7 +33,6 @@ func ioLevel(level int) {
 }
 
 func pciReadConfReg(bus, dev, function, offset uint32) (value uint32) {
-
 	address := 0x80000000 |
 		bus&PciBusMask<<16 |
 		dev&PciDevMask<<11 |
