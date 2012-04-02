@@ -1,8 +1,6 @@
 package main
 
-/*
-#include <sys/io.h>
-*/
+// #include <sys/io.h>
 import "C"
 
 import (
@@ -64,7 +62,7 @@ func pciDumpHeader(bus, dev, function uint32) {
 		value = pciReadConfReg(bus, dev, function, offset)
 		if offset&0x0c == 0x0c {
 			if offset != PciRegLimit-1 {
-				fmt.Printf("0x%08x\n%02x : ", value, (offset + 4))
+				fmt.Printf("0x%08x\n%02x : ", value, offset+4)
 			} else {
 				fmt.Printf("0x%08x\n", value)
 			}
