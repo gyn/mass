@@ -108,9 +108,10 @@ func main() {
 	ioLevel(3)
 
 	if isWrite {
-		value, err := strconv.Atoi(flag.Arg(1))
+		value, err := strconv.ParseUint(flag.Arg(0), 0, 32)
 		if err != nil {
-			fmt.Println("Error : bad value")
+			fmt.Println(err)
+
 			os.Exit(2)
 		}
 
