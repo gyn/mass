@@ -17,6 +17,9 @@ const (
 
 	mapSize = 4096
 	mapMask = mapSize - 1
+
+	mapProt = syscall.PROT_READ | syscall.PROT_WRITE
+	mapFlag = syscall.MAP_SHARED
 )
 
 func toSliceUint16(buffer []byte) []uint16 {
@@ -149,12 +152,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	fd := file.Fd()
+	fd := int(file.Fd())
 	base := address &^ mapMask
 	offset := address & mapMask
 
-	ptrUint8, err := syscall.Mmap(int(fd), base, mapSize,
-		syscall.PROT_READ|syscall.PROT_WRITE, syscall.MAP_SHARED)
+	ptr, err := syscall.Mmap(fd, base, mapSize, mapProt, mapFlag)
 	if err != nil {
 		fmt.Println(err)
 
@@ -169,10 +171,10 @@ func main() {
 			os.Exit(1)
 		}
 
-		writeMem(ptrUint8, width, offset, value)
+		writeMem(ptr, width, offset, value)
 	}
 
-	addr, data := readMem(ptrUint8, width, offset)
+	addr, data := readMem(ptr, width, offset)
 
-	fmt.Printf("0x%x 0x%x\n", addr, data)
+	fmt.Printf("0x%x 0x%x\n", addr+base, data)
 }
