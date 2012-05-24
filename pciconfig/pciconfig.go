@@ -76,10 +76,6 @@ func usage() {
 
 func main() {
 	var isWrite bool
-	var busVal uint32
-	var devVal uint32
-	var functionVal uint32
-	var offsetVal uint32
 
 	flag.Usage = usage
 	flag.Parse()
@@ -100,10 +96,10 @@ func main() {
 		usage()
 	}
 
-	busVal = uint32(*bus)
-	devVal = uint32(*dev)
-	functionVal = uint32(*function)
-	offsetVal = uint32(*offset)
+	busVal := uint32(*bus)
+	devVal := uint32(*dev)
+	functionVal := uint32(*function)
+	offsetVal := uint32(*offset)
 
 	ioLevel(3)
 
