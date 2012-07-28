@@ -15,8 +15,8 @@ const (
 	size32bit
 	size64bit
 
-	mapSize = 4096
-	mapMask = mapSize - 1
+	pageSize     = 4096
+	pageSizeMask = pageSize - 1
 
 	mapProt = syscall.PROT_READ | syscall.PROT_WRITE
 	mapFlag = syscall.MAP_SHARED
@@ -164,10 +164,10 @@ func main() {
 	}
 
 	fd := int(file.Fd())
-	base := address &^ mapMask
-	offset := address & mapMask
+	base := address &^ pageSizeMask
+	offset := address & pageSizeMask
 
-	ptr, err := syscall.Mmap(fd, base, mapSize, mapProt, mapFlag)
+	ptr, err := syscall.Mmap(fd, base, pageSize, mapProt, mapFlag)
 	if err != nil {
 		fmt.Println(err)
 
