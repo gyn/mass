@@ -102,14 +102,26 @@ func writeMem(buffer []byte, width int, offset int64, value int64) {
 
 func usage() {
 	fmt.Fprintf(os.Stderr, "\nUsage:\t%s address type [ data ]\n"+
-		"\taddress : memory address\n"+
+		"\taddress : aligned memory address\n"+
 		"\ttype    : bit width, [b]yte, [h]alfword, [w]ord or [d]oubleword\n"+
 		"\tdata    : data to be written\n\n",
 		os.Args[0])
 }
 
+func atoInt(param string) (value int64) {
+	value, err := strconv.ParseInt(param, 0, 64)
+	if err != nil {
+		fmt.Println(err)
+
+		os.Exit(1)
+	}
+
+	return
+}
+
 func main() {
 	var width int
+	var value int64
 
 	//
 	// check parameters
@@ -122,11 +134,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	address, err := strconv.ParseInt(os.Args[1], 0, 64)
-	if err != nil {
-		fmt.Println(err)
+	address := atoInt(os.Args[1])
 
-		os.Exit(1)
+	if argc == 4 {
+		value = atoInt(os.Args[3])
 	}
 
 	switch os.Args[2] {
@@ -164,13 +175,6 @@ func main() {
 	}
 
 	if argc == 4 {
-		value, err := strconv.ParseInt(os.Args[3], 0, 64)
-		if err != nil {
-			fmt.Println(err)
-
-			os.Exit(1)
-		}
-
 		writeMem(ptr, width, offset, value)
 	}
 
