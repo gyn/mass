@@ -12,18 +12,18 @@ import (
 )
 
 const (
-	PciAddrPort = 0x0cf8
-	PciDataPort = 0x0cfc
+	PciAddrPort	= 0x0cf8
+	PciDataPort	= 0x0cfc
 
-	PciBusMask  = 0xff
-	PciDevMask  = 0x1f
-	PciFuncMask = 0x07
-	PciRegMask  = 0xfc
+	PciBusMask	= 0xff
+	PciDevMask	= 0x1f
+	PciFuncMask	= 0x07
+	PciRegMask	= 0xfc
 
-	PciBusLimit  = PciBusMask + 1
-	PciDevLimit  = PciDevMask + 1
-	PciFuncLimit = PciFuncMask + 1
-	PciRegLimit  = PciRegMask + 1
+	PciBusLimit	= PciBusMask + 1
+	PciDevLimit	= PciDevMask + 1
+	PciFuncLimit	= PciFuncMask + 1
+	PciRegLimit	= PciRegMask + 1
 )
 
 var bus = flag.Uint("bus", 0, "bus number, [0 : 255]")
