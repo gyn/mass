@@ -5,7 +5,7 @@ import "C"
 
 import (
 	"fmt"
-	"os"
+	"log"
 	"syscall"
 )
 
@@ -26,9 +26,7 @@ const (
 
 func ioLevel(level int) {
 	if err := syscall.Iopl(level); err != nil {
-		fmt.Print(err)
-
-		os.Exit(1)
+		log.Fatal(err)
 	}
 }
 

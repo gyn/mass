@@ -6,24 +6,25 @@ import "C"
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"syscall"
 )
 
 const (
-	PciAddrPort	= 0x0cf8
-	PciDataPort	= 0x0cfc
+	PciAddrPort = 0x0cf8
+	PciDataPort = 0x0cfc
 
-	PciBusMask	= 0xff
-	PciDevMask	= 0x1f
-	PciFuncMask	= 0x07
-	PciRegMask	= 0xfc
+	PciBusMask  = 0xff
+	PciDevMask  = 0x1f
+	PciFuncMask = 0x07
+	PciRegMask  = 0xfc
 
-	PciBusLimit	= PciBusMask + 1
-	PciDevLimit	= PciDevMask + 1
-	PciFuncLimit	= PciFuncMask + 1
-	PciRegLimit	= PciRegMask + 1
+	PciBusLimit  = PciBusMask + 1
+	PciDevLimit  = PciDevMask + 1
+	PciFuncLimit = PciFuncMask + 1
+	PciRegLimit  = PciRegMask + 1
 )
 
 var bus = flag.Uint("bus", 0, "bus number, [0 : 255]")
@@ -33,9 +34,7 @@ var offset = flag.Uint("offset", 0, "offset, between 0 and 255, 4 byte aligned")
 
 func ioLevel(level int) {
 	if err := syscall.Iopl(level); err != nil {
-		fmt.Print(err)
-
-		os.Exit(1)
+		log.Fatal(err)
 	}
 }
 
@@ -106,9 +105,7 @@ func main() {
 	if isWrite {
 		value, err := strconv.ParseUint(flag.Arg(0), 0, 32)
 		if err != nil {
-			fmt.Println(err)
-
-			os.Exit(2)
+			log.Fatal(err)
 		}
 
 		pciWriteConfReg(busVal, devVal, functionVal, offsetVal, uint32(value))

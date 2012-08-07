@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"reflect"
 	"strconv"
@@ -111,9 +112,7 @@ func usage() {
 func atoInt(param string) (value int64) {
 	value, err := strconv.ParseInt(param, 0, 64)
 	if err != nil {
-		fmt.Println(err)
-
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	return
@@ -134,12 +133,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	address := atoInt(os.Args[1])
-
-	if argc == 4 {
-		value = atoInt(os.Args[3])
-	}
-
 	switch os.Args[2] {
 	case "b":
 		width = size8bit
@@ -155,13 +148,17 @@ func main() {
 		os.Exit(1)
 	}
 
-	file, err := os.OpenFile("/dev/mem", os.O_RDWR|os.O_SYNC, 0644)
-	defer file.Close()
-	if err != nil {
-		fmt.Println(err)
+	address := atoInt(os.Args[1])
 
-		os.Exit(1)
+	if argc == 4 {
+		value = atoInt(os.Args[3])
 	}
+
+	file, err := os.OpenFile("/dev/mem", os.O_RDWR|os.O_SYNC, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
 
 	fd := int(file.Fd())
 	base := address &^ pageSizeMask
@@ -169,9 +166,7 @@ func main() {
 
 	ptr, err := syscall.Mmap(fd, base, pageSize, mapProt, mapFlag)
 	if err != nil {
-		fmt.Println(err)
-
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	if argc == 4 {
