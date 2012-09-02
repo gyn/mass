@@ -21,6 +21,8 @@ const (
 
 	mapProt = syscall.PROT_READ | syscall.PROT_WRITE
 	mapFlag = syscall.MAP_SHARED
+
+	fileProt = os.O_RDWR | os.O_SYNC
 )
 
 func toSliceUint16(buffer []byte) []uint16 {
@@ -154,7 +156,7 @@ func main() {
 		value = atoInt(os.Args[3])
 	}
 
-	file, err := os.OpenFile("/dev/mem", os.O_RDWR|os.O_SYNC, 0644)
+	file, err := os.OpenFile("/dev/mem", fileProt, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
