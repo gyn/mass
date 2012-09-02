@@ -70,17 +70,17 @@ func pciDumpHeader(bus, dev, function uint32) {
 }
 
 func main() {
-	var bus uint32
-	var dev uint32
-	var function uint32
+	var busId uint32
+	var devId uint32
+	var funcId uint32
 
 	ioLevel(3)
 
 	/* scan pci by bus, device and function number */
-	for bus = 0; bus < PciBusLimit; bus++ {
-		for dev = 0; dev < PciDevLimit; dev++ {
-			for function = 0; function < PciFuncLimit; function++ {
-				pciDumpHeader(bus, dev, function)
+	for busId = 0; busId < PciBusLimit; busId++ {
+		for devId = 0; devId < PciDevLimit; devId++ {
+			for funcId = 0; funcId < PciFuncLimit; funcId++ {
+				pciDumpHeader(busId, devId, funcId)
 			}
 		}
 	}
