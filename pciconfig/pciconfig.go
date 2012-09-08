@@ -27,11 +27,6 @@ const (
 	PciRegLimit  = PciRegMask + 1
 )
 
-var bus = flag.Uint("bus", 0, "bus number, [0 : 255]")
-var dev = flag.Uint("dev", 0, "device number, [0 : 63]")
-var function = flag.Uint("function", 0, "function number, [0 : 7]")
-var offset = flag.Uint("offset", 0, "offset, [0 : 255] and 4 byte aligned")
-
 func ioLevel(level int) {
 	if err := syscall.Iopl(level); err != nil {
 		log.Fatal(err)
@@ -75,6 +70,11 @@ func usage() {
 
 func main() {
 	var isWrite bool
+
+	bus := flag.Uint("bus", 0, "bus number, [0 : 255]")
+	dev := flag.Uint("dev", 0, "device number, [0 : 63]")
+	function := flag.Uint("function", 0, "function number, [0 : 7]")
+	offset := flag.Uint("offset", 0, "offset, [0 : 255] and 4 byte aligned")
 
 	flag.Usage = usage
 	flag.Parse()
