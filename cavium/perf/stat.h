@@ -36,12 +36,9 @@ static inline void cvmx_core_stat_start(int event0, int event1)
 	control.s.k = 1;
 	control.s.ex = 1;
 	control.s.w = 1;
-	control.s.m = 1;	/* counter 0 */
 	control.s.event = event0;
-
 	CVMX_MT_COP0(control, COP0_PERFCONTROL0);
 
-	control.s.m = 0;	/* counter 1 */
 	control.s.event = event1;
 	CVMX_MT_COP0(control, COP0_PERFCONTROL1);
 
