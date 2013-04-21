@@ -15,7 +15,7 @@
 %%      Returns the product of its arguments.
 %% -----------------------------------------------------------------------
 
--spec(area(tuple(), number(),number()) -> number()).
+-spec(area(atom(), number(),number()) -> number()).
 
 area(rectangle, Length, Width) when Length >= 0, Width >= 0 ->
 	Length * Width;
