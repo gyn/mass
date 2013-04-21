@@ -8,13 +8,20 @@
 -module (geom).
 
 %% API
--export ([area/2]).
+-export ([area/3]).
 
 %% -----------------------------------------------------------------------
 %% @doc Calculates the area of a rectangle, given the length and width.
 %%      Returns the product of its arguments.
 %% -----------------------------------------------------------------------
 
--spec(area(number(),number()) -> number()).
+-spec(area(tuple(), number(),number()) -> number()).
 
-area(Length, Width) -> Length * Width.
+area(rectangle, Length, Width) when Length >= 0, Width >= 0 ->
+	Length * Width;
+area(triangle, Hight, Width) when Hight >= 0, Width >= 0 ->
+	Hight * Width / 2.0;
+area(ellipse, Hight, Width) when Hight >= 0, Width >= 0 ->
+	math:pi() * Hight * Width;
+area(_, _, _) ->
+	0.
