@@ -8,14 +8,16 @@
 -module (geom).
 
 %% API
--export ([area/3]).
+-export ([area/1]).
 
 %% -----------------------------------------------------------------------
 %% @doc Calculates the area of a rectangle, given the length and width.
 %%      Returns the product of its arguments.
 %% -----------------------------------------------------------------------
 
--spec(area(atom(), number(),number()) -> number()).
+-spec(area({atom(), number(),number()}) -> number()).
+
+area({Shape, Da, Db}) -> area(Shape, Da, Db).
 
 area(rectangle, Length, Width) when Length >= 0, Width >= 0 ->
 	Length * Width;
